@@ -6969,7 +6969,7 @@ static void add_stringable_interface(zend_class_entry *ce) {
 		zend_string_init("stringable", sizeof("stringable") - 1, 0);
 }
 
-static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string *name, bool has_body) /* {{{ */
+static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string *name, zend_ast *return_type_ast, bool has_body) /* {{{ */
 {
 	zend_class_entry *ce = CG(active_class_entry);
 	bool in_interface = (ce->ce_flags & ZEND_ACC_INTERFACE) != 0;
@@ -7013,8 +7013,8 @@ static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string 
 		}
 
 		ce->ce_flags |= ZEND_ACC_IMPLICIT_ABSTRACT_CLASS;
-	} else if (!has_body) {
-		zend_error_noreturn(E_COMPILE_ERROR, "Non-abstract method %s::%s() must contain body",
+	} else if (!has_body && return_type_ast->attr != IS_VOID) {
+		zend_error_noreturn(E_COMPILE_ERROR, "Method %s::%s() must contain body",
 			ZSTR_VAL(ce->name), ZSTR_VAL(name));
 	}
 
@@ -7138,7 +7138,7 @@ static void zend_compile_func_decl(znode *result, zend_ast *ast, bool toplevel) 
 
 	if (is_method) {
 		bool has_body = stmt_ast != NULL;
-		method_lcname = zend_begin_method_decl(op_array, decl->name, has_body);
+		method_lcname = zend_begin_method_decl(op_array, decl->name, return_type_ast, has_body);
 	} else {
 		zend_begin_func_decl(result, op_array, decl, toplevel);
 		if (decl->kind == ZEND_AST_ARROW_FUNC) {
