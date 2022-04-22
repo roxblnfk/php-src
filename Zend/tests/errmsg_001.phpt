@@ -7,10 +7,10 @@ abstract class test {
 }
 
 class Impl extends Test {
-    function Foo();
+    function Foo(): mixed;
 }
 
 echo "Done\n";
 ?>
 --EXPECTF--
-Fatal error: Non-abstract method Impl::Foo() must contain body in %s on line %d
+Fatal error: Method Impl::Foo() must contain body in %s on line %d
