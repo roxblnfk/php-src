@@ -7013,7 +7013,7 @@ static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string 
 		}
 
 		ce->ce_flags |= ZEND_ACC_IMPLICIT_ABSTRACT_CLASS;
-	} else if (!has_body && return_type_ast->attr != IS_VOID) {
+	} else if (!has_body && return_type_ast && return_type_ast->attr != IS_VOID) {
 		zend_error_noreturn(E_COMPILE_ERROR, "Method %s::%s() must contain body",
 			ZSTR_VAL(ce->name), ZSTR_VAL(name));
 	}
