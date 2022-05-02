@@ -11,4 +11,4 @@ var_dump(new Point());
 
 ?>
 --EXPECT--
-object(Point)#1 (3) {}
+object(Point)#1 (0) {}

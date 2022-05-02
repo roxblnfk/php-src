@@ -16,6 +16,4 @@ object(Point)#1 (3) {
   int(1)
   ["y"]=>
   int(2)
-  ["z"]=>
-  int(3)
 }

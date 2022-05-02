@@ -10,4 +10,4 @@ class Impl {
 echo "Done\n";
 ?>
 --EXPECTF--
-Fatal error: Method Impl::Foo() must contain body in %s on line %d
+Fatal error: Method Impl::bar() must contain body in %s on line %d
