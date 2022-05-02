@@ -11,7 +11,7 @@ var_dump(new Point(x: 1, y: 2, z: 3));
 
 ?>
 --EXPECT--
-object(Point)#1 (3) {
+object(Point)#1 (2) {
   ["x"]=>
   int(1)
   ["y"]=>

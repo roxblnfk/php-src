@@ -1,10 +1,10 @@
 --TEST--
-Method with bool returning type must contain body
+Method with null returning type must contain body
 --FILE--
 <?php
 
 class Impl {
-    function foo(): bool;
+    function foo(): null;
 }
 
 echo "Done\n";
