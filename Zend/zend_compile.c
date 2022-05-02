@@ -6975,7 +6975,7 @@ static bool method_can_be_bodyless(zend_ast *return_type_ast)
 		return_type_ast->kind == ZEND_AST_TYPE_UNION || 
 		return_type_ast->kind == ZEND_AST_TYPE_INTERSECTION
 	) {
-		retuen false;
+		return false;
 	}
 
 	return zend_ast_get_str(return_type_ast) == 'void';
