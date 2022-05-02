@@ -6971,14 +6971,15 @@ static void add_stringable_interface(zend_class_entry *ce) {
 
 static bool method_can_be_bodyless(zend_ast *return_type_ast)
 {
-	if (
-		return_type_ast->kind == ZEND_AST_TYPE_UNION || 
-		return_type_ast->kind == ZEND_AST_TYPE_INTERSECTION
-	) {
+	if (!return_type_ast) {
+		return true;
+	} else if (return_type_ast->kind == ZEND_AST_TYPE_UNION || return_type_ast->kind == ZEND_AST_TYPE_INTERSECTION) {
+		// Union types and type intersection are not supported
 		return false;
+	} else {
+		uint32_t type_mask = ZEND_TYPE_PURE_MASK(zend_compile_single_typename(return_type_ast));
+		return type_mask == MAY_BE_VOID;
 	}
-
-	return zend_ast_get_str(return_type_ast) == 'void';
 }
 
 static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string *name, zend_ast *return_type_ast, bool has_body) /* {{{ */
