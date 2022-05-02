@@ -4,10 +4,12 @@ Method with empty returning type can be without body
 <?php
 
 abstract class test {
+    abstract function foo(): void;
 }
 
 class Impl extends Test {
-    function Foo(): void;
+    function foo(): void;
+    function bar(): void;
 }
 
 echo "Done\n";

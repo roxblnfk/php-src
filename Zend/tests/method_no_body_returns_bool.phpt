@@ -1,5 +1,5 @@
 --TEST--
-Method with bool returning type must be with body
+Method with bool returning type must contain body
 --FILE--
 <?php
 
