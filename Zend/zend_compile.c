@@ -6969,6 +6969,18 @@ static void add_stringable_interface(zend_class_entry *ce) {
 		zend_string_init("stringable", sizeof("stringable") - 1, 0);
 }
 
+static bool method_can_be_bodyless(zend_ast *return_type_ast)
+{
+	if (
+		return_type_ast->kind == ZEND_AST_TYPE_UNION || 
+		return_type_ast->kind == ZEND_AST_TYPE_INTERSECTION
+	) {
+		retuen false;
+	}
+
+	return zend_ast_get_str(return_type_ast) == 'void';
+}
+
 static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string *name, zend_ast *return_type_ast, bool has_body) /* {{{ */
 {
 	zend_class_entry *ce = CG(active_class_entry);
@@ -7013,7 +7025,7 @@ static zend_string *zend_begin_method_decl(zend_op_array *op_array, zend_string 
 		}
 
 		ce->ce_flags |= ZEND_ACC_IMPLICIT_ABSTRACT_CLASS;
-	} else if (!has_body && return_type_ast && return_type_ast->attr != IS_VOID) {
+	} else if (!has_body && return_type_ast && !method_can_be_bodyless(return_type_ast)) {
 		zend_error_noreturn(E_COMPILE_ERROR, "Method %s::%s() must contain body",
 			ZSTR_VAL(ce->name), ZSTR_VAL(name));
 	}
