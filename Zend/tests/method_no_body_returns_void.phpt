@@ -1,5 +1,5 @@
 --TEST--
-Method with empty returning type can be without body
+Method with void returning type can be without body
 --FILE--
 <?php
 
@@ -11,6 +11,10 @@ class Impl extends Test {
     function foo(): void;
     function bar(): void;
 }
+
+$obj = new Impl();
+$obj->foo();
+$obj->bar();
 
 echo "Done\n";
 ?>
